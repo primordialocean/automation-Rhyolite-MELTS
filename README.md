@@ -1,9 +1,10 @@
-# automation-rhyolite-melts
+# automation-Rhyolite-MELTS
 
-![Static Badge](https://img.shields.io/badge/rhyolite--MELTS-1.2.0-blue?style=flat-square&logo=rhyolite-melts)
+![Static Badge](https://img.shields.io/badge/Rhyolite--MELTS-1.2.0-blue?style=flat-square)
 ![Static Badge](https://img.shields.io/badge/Ubuntu-20.04_LTS-blue?style=flat-square&logo=Ubuntu)
 ![Static Badge](https://img.shields.io/badge/Python-3.8-blue?style=flat-square&logo=python)
 ![Static Badge](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
+![Static Badge](https://img.shields.io/badge/Earth_science-Volcanology-blue?style=flat-square)
 
 ## Rerequistes
 This repository has been developed under following enviornments:
