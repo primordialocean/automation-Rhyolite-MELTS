@@ -8,8 +8,8 @@
 !summary/.gitkeep
 !.gitignore
 !.gitattributes
-!sample_config.json
-!sample_start.csv
+!config.json
+!start.csv
 !README.md
 !README-ja.md
 !auto_melts.py
