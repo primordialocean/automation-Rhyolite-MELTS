@@ -8,13 +8,12 @@ from pyscreeze import ImageNotFoundException
 import pyscreeze
 pyscreeze.USE_IMAGE_NOT_FOUND_EXCEPTION = True
 
-def get_filelist():
-    files = os.listdir("in")
+def get_filenames(directory, extension):
     filenames = []
-    for f in files:
-        name = os.path.splitext(os.path.basename("in/"+f))[0]
-        filenames.append(name)
-    filenames = sorted(filenames)
+    for file in os.listdir(directory):
+        if file.endswith(extension):
+            filename_wo_extension = os.path.splitext(file)[0]
+            filenames.append(filename_wo_extension)
     return filenames
 
 def click_point(imgname):
@@ -79,8 +78,8 @@ def main():
     
     config_tmp = config["auto_melts"]
     dt_s = config_tmp["Interval time (s)"]
-
-    filenames = get_filelist()
+    
+    filenames = get_filenames("./in", ".melts")
 
     count = 0
     for filename in filenames:
