@@ -6,10 +6,10 @@
 ![Static Badge](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
 
 ## Overview
-`automation-Rhyolite-MELTS`はRhyolite-MELTS (Gualda et al., 2012) を自動化するためのプログラムです。
+`automation-Rhyolite-MELTS`はRhyolite-MELTS (Gualda et al., 2012) を自動化するためのプログラムである。
 
 ## Rerequistes
-本リポジトリは以下の環境で開発されています。
+本リポジトリは以下の環境で開発された。
 
 - Ubuntu 20.04 LTS on VMware 17.5.0
 - Python 3.8.10
@@ -35,7 +35,7 @@ automation-rhyolite-melts/
   └ auto-melts.py
 ```
 
-動作には以下のサードパーティ製ライブラリを必要とします：
+動作には以下のサードパーティ製ライブラリを必要とする：
 
 - `Numpy`
 - `Pandas`
