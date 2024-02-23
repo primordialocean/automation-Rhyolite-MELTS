@@ -27,7 +27,7 @@ def move_results(filename):
     subprocess.run("mv *.tbl out/"+filename+"/", shell=True)
     subprocess.run("mv *.out out/"+filename+"/", shell=True)
 
-def calc_melts(filename: str):
+def calc_melts(dt, filename):
     subprocess.run(
         "echo 'y\nn\ny\n' | ./Melts-rhyolite-public ./melts_mv.sh &",
         shell=True)
@@ -50,7 +50,7 @@ def calc_melts(filename: str):
     pyautogui.write("in/"+filename+".melts", interval = 0.1)
     pyautogui.press("enter")
     pyautogui.hotkey("ctrl", "e")
-    time.sleep(90)
+    time.sleep(dt)
     
     for trycount in range(11):
         if trycount < 10:
@@ -73,11 +73,18 @@ def calc_melts(filename: str):
     move_results(filename)
 
 def main():
+    # load config.json
+    with open("config.json") as f:
+        config = json.load(f)
+    
+    config_tmp = config["auto_melts"]
+    dt_s = config_tmp["Interval time (s)"]
+
     filenames = get_filelist()
 
     count = 0
     for filename in filenames:
-        calc_melts(filename)
+        calc_melts(dt_s, filename)
         count += 1
         print(filename)
         print(str(int(100 * count / len(filenames)))+"%")
