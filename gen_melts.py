@@ -40,7 +40,8 @@ def main():
     with open("config.json") as f:
         config = json.load(f)
     
-    active_normalisation = config["Normalise with H2O"]
+    config_tmp = config["gen_melts"]
+    active_normalisation = config_tmp["Normalise with H2O"]
     
     df = pd.read_csv("start.csv")
     elements = [

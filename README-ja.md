@@ -101,7 +101,7 @@ pip install --user ${the name of third-party libraries}
 
 
 ## About `config.json`
-- `"auto_melts"`: `"auto_melts.py"`の設定を含む
+- `"gen_melts"`: `"gen_melts.py"`の設定を含む
   - `"Normalise with H2O"`: 出発組成を合計100 wt%に規格化する際、H2Oを含めるかどうかを選択する。H2Oを含めて規格化する場合は`true`を、含めない場合は`false`を選ぶ。
 
 - `"processing"`: `"processing.py"`の設定を含む
