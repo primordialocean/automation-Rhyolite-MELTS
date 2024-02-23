@@ -3,7 +3,7 @@
         "Normalise with H2O": true
     },
     "auto_melts":{
-        "Interval time (s)": 90
+        "Interval time (s)": 20
     },
     "processing": {
         "inputfile": "input.csv",
