@@ -97,7 +97,7 @@ def main():
     inputs = pd.concat([df1, df2], axis=1)
 
     # normalised starting composition to 100 wt% including H2O content
-    if active_normalisation == "True":
+    if active_normalisation == True:
         coef = (100 - inputs["H2O"]) / inputs[elements].sum(axis=1)
         inputs[elements] = inputs[elements].apply(lambda x: x * coef, axis=0)
     else:
