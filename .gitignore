@@ -18,3 +18,6 @@
 !processing.py
 !plot_ptx.py
 !plot_liquidus.py
+!sample_config.json
+!sample_start.csv
+!search_liquidus.py
