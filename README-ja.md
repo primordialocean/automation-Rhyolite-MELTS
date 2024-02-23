@@ -99,7 +99,6 @@ pip install --user ${the name of third-party libraries}
 - `log fo2 Path`: `MH`, `NNO`, `FMQ`, `WM`, `IW`のいずれかまたはdFMQの形式（e.g. `+1FMQ`）で設定する。dFMQは`-9FMQ`から`+3FMQ`の範囲で設定できる。
 - `Mode`: `Equilibrium`（平衡結晶作用）と`Fractionate Solids`（分別結晶作用）から選択する。
 
-
 ## About `config.json`
 - `"gen_melts"`: `"gen_melts.py"`の設定を含む
   - `"Normalise with H2O"`: 出発組成を合計100 wt%に規格化する際、H2Oを含めるかどうかを選択する。H2Oを含めて規格化する場合は`true`を、含めない場合は`false`を選ぶ。

@@ -181,6 +181,18 @@ def process_ox(filepath):
     df_ox = df_ox[ox_outputs]
     return df_ox
 
+def process_qtz(filepath):
+    pass
+
+def process_amp(filepath):
+    pass
+
+def process_bt(filepath):
+    pass
+
+def process_amp(filepath):
+    pass
+
 def merge_results(df, SiO2_wt, H2O_wt, oxbuffer, mode):
     df_filtered = df[(df["SiO2"] == SiO2_wt) & (df["H2O"] == H2O_wt) & (df["log fo2 Path"] == oxbuffer) & (df["Mode"] == mode)]
 
