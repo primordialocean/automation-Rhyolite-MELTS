@@ -24,7 +24,11 @@
             "pl": true,
             "opx": true,
             "aug": true,
-            "pig": false
+            "pig": false,
+            "qtz": false,
+            "amp": false,
+            "bt": false,
+            "ap": false
         },
         "p1_xlim": [500, 1200],
         "p1_ylim": [0, 100],
