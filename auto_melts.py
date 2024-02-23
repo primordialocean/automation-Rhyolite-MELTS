@@ -2,6 +2,7 @@ import subprocess
 import pyautogui
 import os
 import time
+import json
 
 from pyscreeze import ImageNotFoundException
 import pyscreeze

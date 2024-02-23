@@ -11,8 +11,10 @@
 !sample_config.json
 !sample_start.csv
 !README.md
+!README-ja.md
 !auto_melts.py
 !convert_results.py
 !gen_melts.py
 !processing.py
-!search_liquidus.py
+!plot_ptx.py
+!plot_liquidus.py
