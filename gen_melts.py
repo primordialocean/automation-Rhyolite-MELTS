@@ -1,5 +1,6 @@
 import pandas as pd
 from itertools import product
+import json
 
 def gen_meltsfile(inputs):
     elements = [
@@ -35,6 +36,13 @@ def gen_meltsfile(inputs):
 
 
 def main():
+    # load config.json
+    with open("config.json") as f:
+        config = json.load(f)
+    
+    config_tmp = config["gen_melts"]
+    active_normalisation = config_tmp["Normalise with H2O"]
+    
     df = pd.read_csv("start.csv")
     elements = [
         "SiO2", "TiO2", "Al2O3", "FeO", "MnO", "MgO",
@@ -89,12 +97,17 @@ def main():
     df2 = pd.concat([params] * len(bulk), axis=0).reset_index(drop=True)
     inputs = pd.concat([df1, df2], axis=1)
 
-    # 水も含めて100%に規格化したい場合はこちらをコメントアウト
-    # coef = (100 - inputs["H2O"]) / inputs[elements].sum(axis=1)
-    # inputs[elements] = inputs[elements].apply(lambda x: x * coef, axis=0)
+    # normalised starting composition to 100 wt% including H2O content
+    if active_normalisation == True:
+        coef = (100 - inputs["H2O"]) / inputs[elements].sum(axis=1)
+        inputs[elements] = inputs[elements].apply(lambda x: x * coef, axis=0)
+    else:
+        pass
+    
+    # export starting condition to input.csv
     inputs.to_csv("input.csv")
 
-    # meltsファイルが必要な場合はコメントアウトする
+    # export melts file
     gen_meltsfile(inputs)
 
 if __name__ == "__main__":

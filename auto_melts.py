@@ -2,18 +2,18 @@ import subprocess
 import pyautogui
 import os
 import time
+import json
 
 from pyscreeze import ImageNotFoundException
 import pyscreeze
 pyscreeze.USE_IMAGE_NOT_FOUND_EXCEPTION = True
 
-def get_filelist():
-    files = os.listdir("in")
+def get_filenames(directory, extension):
     filenames = []
-    for f in files:
-        name = os.path.splitext(os.path.basename("in/"+f))[0]
-        filenames.append(name)
-    filenames = sorted(filenames)
+    for file in os.listdir(directory):
+        if file.endswith(extension):
+            filename_wo_extension = os.path.splitext(file)[0]
+            filenames.append(filename_wo_extension)
     return filenames
 
 def click_point(imgname):
@@ -26,7 +26,7 @@ def move_results(filename):
     subprocess.run("mv *.tbl out/"+filename+"/", shell=True)
     subprocess.run("mv *.out out/"+filename+"/", shell=True)
 
-def calc_melts(filename: str):
+def calc_melts(dt, filename):
     subprocess.run(
         "echo 'y\nn\ny\n' | ./Melts-rhyolite-public ./melts_mv.sh &",
         shell=True)
@@ -49,7 +49,7 @@ def calc_melts(filename: str):
     pyautogui.write("in/"+filename+".melts", interval = 0.1)
     pyautogui.press("enter")
     pyautogui.hotkey("ctrl", "e")
-    time.sleep(90)
+    time.sleep(dt)
     
     for trycount in range(11):
         if trycount < 10:
@@ -72,11 +72,18 @@ def calc_melts(filename: str):
     move_results(filename)
 
 def main():
-    filenames = get_filelist()
+    # load config.json
+    with open("config.json") as f:
+        config = json.load(f)
+    
+    config_tmp = config["auto_melts"]
+    dt_s = config_tmp["Interval time (s)"]
+    
+    filenames = get_filenames("./in", ".melts")
 
     count = 0
     for filename in filenames:
-        calc_melts(filename)
+        calc_melts(dt_s, filename)
         count += 1
         print(filename)
         print(str(int(100 * count / len(filenames)))+"%")

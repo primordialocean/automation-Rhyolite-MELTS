@@ -1,4 +1,10 @@
 {
+    "gen_melts":{
+        "Normalise with H2O": true
+    },
+    "auto_melts":{
+        "Interval time (s)": 20
+    },
     "processing": {
         "inputfile": "input.csv",
         "l_H2O_wt": [
@@ -10,7 +16,7 @@
         "l_oxbuffer": ["MH", "NNO", "FMQ", "WM", "IW"],
         "mode": "Equilibrium"
     },
-    "search_liquidus": {
+    "plot_liquidus": {
         "ps_MPa": [
             0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100
         ],
@@ -18,7 +24,11 @@
             "pl": true,
             "opx": true,
             "aug": true,
-            "pig": false
+            "pig": false,
+            "qtz": false,
+            "amp": false,
+            "bt": false,
+            "ap": false
         },
         "p1_xlim": [500, 1200],
         "p1_ylim": [0, 100],
