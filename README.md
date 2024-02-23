@@ -6,6 +6,8 @@
 ![Static Badge](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
 ![Static Badge](https://img.shields.io/badge/Earth_science-Volcanology-blue?style=flat-square)
 
+[日本語版README](README-ja.md)
+
 ## Rerequistes
 This repository has been developed under following enviornments:
 - Ubuntu 20.04 LTS on VMware 17.5.0

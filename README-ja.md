@@ -5,6 +5,8 @@
 ![Static Badge](https://img.shields.io/badge/Python-3.8-blue?style=flat-square&logo=python)
 ![Static Badge](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
 
+[English README](README.md)
+
 ## Overview
 `automation-Rhyolite-MELTS`はRhyolite-MELTS (Gualda et al., 2012) を自動化するためのプログラムである。
 
