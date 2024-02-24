@@ -51,7 +51,6 @@ def process_ol(filepath):
     df_ol = df_ol[ol_outputs]
     return df_ol
 
-
 def process_cpx(filepath):
     aug_outputs = ["T (C)", "P (MPa)", "aug mass (gm)", "aug Wo", "aug Mg#"]
     pig_outputs = ["T (C)", "P (MPa)", "pig mass (gm)", "pig Wo", "pig Mg#"]
@@ -329,8 +328,7 @@ def merge_results(df, SiO2_wt, H2O_wt, oxbuffer, mode):
             df_ap = df_liq[["T (C)", "P (MPa)"]].copy()
             df_ap.loc[:, "ap mass (gm)"] = np.nan
 
-        df = pd.merge(df_liq, df_pl, how="left", on =["T (C)", "P (MPa)"])
-        df = pd.merge(df, df_ol, how="left", on =["T (C)", "P (MPa)"])
+        df = pd.merge(df_liq, df_ol, how="left", on =["T (C)", "P (MPa)"])
         df = pd.merge(df, df_opx, how="left", on =["T (C)", "P (MPa)"])
         df = pd.merge(df, df_aug, how="left", on =["T (C)", "P (MPa)"])
         df = pd.merge(df, df_pig, how="left", on =["T (C)", "P (MPa)"])
@@ -368,6 +366,7 @@ def main():
     for SiO2_wt in l_SiO2_wt:
         for oxbuffer in l_oxbuffer:
             for H2O_wt in l_H2O_wt:
+                print(SiO2_wt, oxbuffer, H2O_wt)
                 merge_results(df, SiO2_wt, H2O_wt, oxbuffer, mode)
 
 if __name__ == "__main__":
