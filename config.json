@@ -14,7 +14,7 @@
             61.83
         ],
         "l_oxbuffer": ["NNO"],
-        "mode": "Equilibrium"
+        "Mode": "Equilibrium"
     },
     "plot_liquidus": {
         "ps_MPa": [

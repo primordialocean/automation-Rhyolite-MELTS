@@ -358,7 +358,7 @@ def main():
     l_H2O_wt = config["l_H2O_wt"]
     l_SiO2_wt = config["l_SiO2_wt"]
     l_oxbuffer = config["l_oxbuffer"]
-    mode = config["mode"]
+    mode = config["Mode"]
 
     #sys.exit()
     
