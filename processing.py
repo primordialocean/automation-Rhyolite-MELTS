@@ -15,17 +15,17 @@ molecular_weights = {
 }
 
 def process_liq(filepath):
-    elements = [
-        "wt% SiO2", "wt% TiO2", "wt% Al2O3", "wt% FeOt", "wt% MnO", "wt% MgO",
-        "wt% CaO", "wt% Na2O", "wt% K2O", "wt% P2O5"
-    ]
     outputs = [
         "T (C)", "P (MPa)", "liq mass (gm)",
-        "wt% SiO2", "wt% TiO2", "wt% Al2O3", "wt% FeOt", "wt% MnO", "wt% MgO",
-        "wt% CaO", "wt% Na2O", "wt% K2O", "wt% P2O5", "wt% H2O"]
+        "wt% SiO2", "wt% TiO2", "wt% Al2O3", "wt% Fe2O3", "wt% FeO", "wt% MnO",
+        "wt% MgO", "wt% CaO", "wt% Na2O", "wt% K2O", "wt% P2O5", "wt% H2O"
+        ]
+    elements = [
+        "wt% SiO2", "wt% TiO2", "wt% Al2O3", "wt% Fe2O3", "wt% FeO", "wt% MnO",
+        "wt% MgO", "wt% CaO", "wt% Na2O", "wt% K2O", "wt% P2O5"
+        ]
     df_liq = pd.read_csv(filepath + "melts-liquid.csv")
     df_liq["P (MPa)"] = 100 * df_liq["P (kbars)"]
-    df_liq["wt% FeOt"] = df_liq["wt% FeO"] + 0.9 * df_liq["wt% Fe2O3"]
     df_liq[elements] = df_liq[elements].apply(lambda x: x * 100 / x.sum(), axis=1)
     df_liq = df_liq[outputs]
     return df_liq
