@@ -6,7 +6,6 @@
 !out/.gitkeep
 !plots/.gitkeep
 !summary/.gitkeep
-!resources/.gitkeep
 !.gitignore
 !.gitattributes
 !config.json
