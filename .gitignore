@@ -6,11 +6,10 @@
 !out/.gitkeep
 !plots/.gitkeep
 !summary/.gitkeep
-!samples/*
+!samples/start.csv
+!samples/config.json
 !.gitignore
 !.gitattributes
-!config.json
-!start.csv
 !README.md
 !README-ja.md
 !auto_melts.py
