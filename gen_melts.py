@@ -10,8 +10,9 @@ def gen_meltsfile(inputs):
 
     for i in range(len(inputs)):
         # zfillで0埋め．桁数は任意のものを．
-        with open("in/input-"+str(i).zfill(8)+".melts", "w") as f:
-            f.write("Title: "+str(i)+"\n")
+        filename = inputs["Filename"][i]
+        with open("in/"+ filename +".melts", "w") as f:
+            f.write("Title: "+ filename +"\n")
             for element in elements:
                 f.write("Initial Composition: " + element + " " \
                         + str(inputs[element][i]) + "\n")
@@ -38,14 +39,13 @@ def gen_meltsfile(inputs):
 def main():
     # load config.json
     with open("config.json") as f:
-        config = json.load(f)
+        config = json.load(f)["gen_melts"]
     
-    config_tmp = config["gen_melts"]
-    active_normalisation = config_tmp["Normalise with H2O"]
+    active_normalisation = config["Normalise with H2O"]
     
     df = pd.read_csv("start.csv")
     elements = [
-        "SiO2", "TiO2", "Al2O3", "FeO", "MnO", "MgO",
+        "Sample", "SiO2", "TiO2", "Al2O3", "FeO", "MnO", "MgO",
         "CaO", "Na2O", "K2O", "P2O5",
         ]
     bulk = df[elements].dropna()
@@ -99,13 +99,17 @@ def main():
 
     # normalised starting composition to 100 wt% including H2O content
     if active_normalisation == True:
-        coef = (100 - inputs["H2O"]) / inputs[elements].sum(axis=1)
-        inputs[elements] = inputs[elements].apply(lambda x: x * coef, axis=0)
+        pass
+        #coef = (100 - inputs["H2O"]) / inputs[elements].sum(axis=1)
+        #inputs[elements] = inputs[elements].apply(lambda x: x * coef, axis=0)
     else:
         pass
     
     # export starting condition to input.csv
-    inputs.to_csv("input.csv")
+    index_num = range(0, len(inputs.index))
+    index_name = ["input-"+str(i).zfill(8) for i in index_num]
+    inputs.insert(0, "Filename", index_name)
+    inputs.to_csv("input.csv", index=False)
 
     # export melts file
     gen_meltsfile(inputs)
