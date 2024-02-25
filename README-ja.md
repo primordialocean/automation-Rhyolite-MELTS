@@ -141,7 +141,7 @@ rhyolite-MELTS (1.0.2, 1.1.0, 1.2.0) pMELTS (5.6.1) - (Jul 31 2015 - 14:52:41)
   - `"Normalise with H2O"`: 出発組成を合計100 wt%に規格化する際、H2Oを含めるかどうかを選択する。H2Oを含めて規格化する場合は`true`を、含めない場合は`false`を選ぶ。
 
 - `"processing"`: `"processing.py"`の設定を含む
-  - `"l_SiO2_wt"`, `"l_H2O_wt"`, `"l_oxbuffer"`: 出発組成のSiO2、H2O、fO2 bufferのうち、summaryに出力する値をリスト形式で設定する。
+  - `"l_sample"`, `"l_H2O_wt"`, `"l_oxbuffer"`: 出発組成のサンプル番号、H2O、fO2 bufferのうち、summaryに出力する値をリスト形式で設定する。
   - `"Mode"`: 設定した計算モードのうち、`Equilibrium`（平衡結晶作用）と`Fractionate Solids`（分別結晶作用）からsummaryに出力するものを設定する。
 
 - `"plot_liquidus"`: `"plot_liquidus.py"`の設定を含む

@@ -232,12 +232,16 @@ def process_ap(filepath):
     df_ap = df_ap[ap_outputs]
     return df_ap
 
-def merge_results(df, SiO2_wt, H2O_wt, oxbuffer, mode):
-    df_filtered = df[(df["SiO2"] == SiO2_wt) & (df["H2O"] == H2O_wt) & (df["log fo2 Path"] == oxbuffer) & (df["Mode"] == mode)]
-
-    indexes = df_filtered["Unnamed: 0"].to_list()
-
-    dirnames = ["input-" + str(i).zfill(8) for i in indexes]
+def merge_results(df, sample_name, H2O_wt, oxbuffer, mode):
+    df_filtered = df[
+        (df["Sample"] == sample_name) \
+        & (df["H2O"] == H2O_wt) \
+        & (df["log fo2 Path"] == oxbuffer) \
+        & (df["Mode"] == mode)
+        ]
+    
+    dirnames = df_filtered["Filename"].to_list()
+    print(dirnames)
 
     dfs = []
     for dirname in dirnames:
@@ -328,47 +332,64 @@ def merge_results(df, SiO2_wt, H2O_wt, oxbuffer, mode):
         except (FileNotFoundError, EmptyDataError):
             df_ap = df_liq[["T (C)", "P (MPa)"]].copy()
             df_ap.loc[:, "ap mass (gm)"] = np.nan
-
-        df = pd.merge(df_liq, df_ol, how="left", on =["T (C)", "P (MPa)"])
-        df = pd.merge(df, df_opx, how="left", on =["T (C)", "P (MPa)"])
-        df = pd.merge(df, df_aug, how="left", on =["T (C)", "P (MPa)"])
-        df = pd.merge(df, df_pig, how="left", on =["T (C)", "P (MPa)"])
-        df = pd.merge(df, df_amp, how="left", on =["T (C)", "P (MPa)"])
-        df = pd.merge(df, df_hbl, how="left", on =["T (C)", "P (MPa)"])
-        df = pd.merge(df, df_bt, how="left", on =["T (C)", "P (MPa)"])
-        df = pd.merge(df, df_pl, how="left", on =["T (C)", "P (MPa)"])
-        df = pd.merge(df, df_kfs, how="left", on =["T (C)", "P (MPa)"])
-        df = pd.merge(df, df_qtz, how="left", on =["T (C)", "P (MPa)"])
-        df = pd.merge(df, df_ox, how="left", on =["T (C)", "P (MPa)"])
-        df = pd.merge(df, df_ap, how="left", on =["T (C)", "P (MPa)"])
-        df.insert(0, "Input", dirname)
-        dfs.append(df)
-        del df
+        
+        # create a new DataFrame for each sample
+        df_merged = pd.merge(df_liq, df_ol, how="left", on =["T (C)", "P (MPa)"])
+        df_merged = pd.merge(df_merged, df_opx, how="left", on =["T (C)", "P (MPa)"])
+        df_merged = pd.merge(df_merged, df_aug, how="left", on =["T (C)", "P (MPa)"])
+        df_merged = pd.merge(df_merged, df_pig, how="left", on =["T (C)", "P (MPa)"])
+        df_merged = pd.merge(df_merged, df_amp, how="left", on =["T (C)", "P (MPa)"])
+        df_merged = pd.merge(df_merged, df_hbl, how="left", on =["T (C)", "P (MPa)"])
+        df_merged = pd.merge(df_merged, df_bt, how="left", on =["T (C)", "P (MPa)"])
+        df_merged = pd.merge(df_merged, df_pl, how="left", on =["T (C)", "P (MPa)"])
+        df_merged = pd.merge(df_merged, df_kfs, how="left", on =["T (C)", "P (MPa)"])
+        df_merged = pd.merge(df_merged, df_qtz, how="left", on =["T (C)", "P (MPa)"])
+        df_merged = pd.merge(df_merged, df_ox, how="left", on =["T (C)", "P (MPa)"])
+        df_merged = pd.merge(df_merged, df_ap, how="left", on =["T (C)", "P (MPa)"])
+        df_merged.insert(0, "Filename", dirname)
+        dfs.append(df_merged)
     
     result = pd.concat(dfs)
-    result.insert(1, "bulk wt% SiO2", SiO2_wt)
+    result.insert(1, "Sample", sample_name)
     result.insert(2, "bulk wt% H2O", H2O_wt)
     result.insert(3, "Oxide buffer", oxbuffer)
     result.insert(4, "Mode", mode)
-    result.to_csv("summary/summary_" + str(SiO2_wt) + " wt% SiO2_" + str(H2O_wt) + " wt% H2O_" + oxbuffer + ".csv", index = False)
+    return result
 
 def main():
-    # load a config file
+    # load config file
     config = json.load(open("config.json", "r"))["processing"]
-    inputfile = config["inputfile"]
+    l_sample = config["l_sample"]
     l_H2O_wt = config["l_H2O_wt"]
-    l_SiO2_wt = config["l_SiO2_wt"]
     l_oxbuffer = config["l_oxbuffer"]
     mode = config["Mode"]
 
-    #sys.exit()
-    
-    df = pd.read_csv(inputfile)
-    for SiO2_wt in l_SiO2_wt:
+    # load inputfile
+    df = pd.read_csv("input.csv")
+
+    # filter results
+    for sample_name in l_sample:
         for oxbuffer in l_oxbuffer:
             for H2O_wt in l_H2O_wt:
-                print(SiO2_wt, oxbuffer, H2O_wt)
-                merge_results(df, SiO2_wt, H2O_wt, oxbuffer, mode)
+                print(sample_name, oxbuffer, H2O_wt)
+                df_filtered = df[
+                (df["Sample"] == sample_name) \
+                & (df["H2O"] == H2O_wt) \
+                & (df["log fo2 Path"] == oxbuffer) \
+                & (df["Mode"] == mode)
+                ]
+                print(df_filtered.head())
+                """
+                result = merge_results(
+                    df, sample_name, H2O_wt, oxbuffer, mode
+                    )
+                result.result.to_csv(
+                    "summary/Sample-"
+                    + sample_name + "_"
+                    + str(H2O_wt) + " wt% H2O_"
+                    + oxbuffer + ".csv", index = False
+                    )
+                """
 
 if __name__ == "__main__":
     main()
