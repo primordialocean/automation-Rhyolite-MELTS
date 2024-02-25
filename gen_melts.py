@@ -106,7 +106,7 @@ def main():
         pass
     
     # export starting condition to input.csv
-    index_num = range(0, len(inputs.index))
+    index_num = range(1, len(inputs.index)+1)
     index_name = ["input-"+str(i).zfill(8) for i in index_num]
     inputs.insert(0, "Filename", index_name)
     inputs.to_csv("input.csv", index=False)
