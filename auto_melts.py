@@ -14,6 +14,7 @@ def get_filenames(directory, extension):
         if file.endswith(extension):
             filename_wo_extension = os.path.splitext(file)[0]
             filenames.append(filename_wo_extension)
+            filenames = sorted(filenames)
     return filenames
 
 def click_point(imgname):

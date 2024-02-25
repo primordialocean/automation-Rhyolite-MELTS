@@ -1,4 +1,5 @@
 import pandas as pd
+from pandas.errors import EmptyDataError
 import numpy as np
 import json
 import sys
@@ -244,12 +245,12 @@ def merge_results(df, SiO2_wt, H2O_wt, oxbuffer, mode):
 
         try:
             df_liq = process_liq(filepath)
-        except FileNotFoundError:
+        except (FileNotFoundError, EmptyDataError):
             continue
         
         try:
             df_ol = process_ol(filepath)
-        except FileNotFoundError:
+        except (FileNotFoundError, EmptyDataError):
             df_ol = df_liq[["T (C)", "P (MPa)"]].copy()
             df_ol.loc[:, "ol mass (gm)"] = np.nan
             df_ol.loc[:, "ol Fo"] = np.nan
@@ -257,7 +258,7 @@ def merge_results(df, SiO2_wt, H2O_wt, oxbuffer, mode):
         
         try:
             df_opx = process_opx(filepath)
-        except FileNotFoundError:
+        except (FileNotFoundError, EmptyDataError):
             df_opx = df_liq[["T (C)", "P (MPa)"]].copy()
             df_opx.loc[:, "opx mass (gm)"] = np.nan
             df_opx.loc[:, "opx Wo"] = np.nan
@@ -265,7 +266,7 @@ def merge_results(df, SiO2_wt, H2O_wt, oxbuffer, mode):
 
         try:
             df_aug, df_pig = process_cpx(filepath)
-        except FileNotFoundError:
+        except (FileNotFoundError, EmptyDataError):
             # augite
             df_aug = df_liq[["T (C)", "P (MPa)"]].copy()
             df_aug.loc[:, "aug mass (gm)"] = np.nan
@@ -279,25 +280,25 @@ def merge_results(df, SiO2_wt, H2O_wt, oxbuffer, mode):
 
         try:
             df_amp = process_amp(filepath)
-        except FileNotFoundError:
+        except (FileNotFoundError, EmptyDataError):
             df_amp = df_liq[["T (C)", "P (MPa)"]].copy()
             df_amp.loc[:, "amp mass (gm)"] = np.nan
 
         try:
-            df_hbl = process_amp(filepath)
-        except FileNotFoundError:
+            df_hbl = process_hbl(filepath)
+        except (FileNotFoundError, EmptyDataError):
             df_hbl = df_liq[["T (C)", "P (MPa)"]].copy()
             df_hbl.loc[:, "hbl mass (gm)"] = np.nan
 
         try:
-            df_bt = process_amp(filepath)
-        except FileNotFoundError:
+            df_bt = process_bt(filepath)
+        except (FileNotFoundError, EmptyDataError):
             df_bt = df_liq[["T (C)", "P (MPa)"]].copy()
             df_bt.loc[:, "bt mass (gm)"] = np.nan
 
         try:
             df_pl, df_kfs = process_fld(filepath)
-        except FileNotFoundError:
+        except (FileNotFoundError, EmptyDataError):
             # plagioclase
             df_pl = df_liq[["T (C)", "P (MPa)"]].copy()
             df_pl.loc[:, "pl mass (gm)"] = np.nan
@@ -310,21 +311,21 @@ def merge_results(df, SiO2_wt, H2O_wt, oxbuffer, mode):
             df_kfs.loc[:, "kfs Or"] = np.nan
 
         try:
-            df_qtz = process_amp(filepath)
-        except FileNotFoundError:
+            df_qtz = process_qtz(filepath)
+        except (FileNotFoundError, EmptyDataError):
             df_qtz = df_liq[["T (C)", "P (MPa)"]].copy()
             df_qtz.loc[:, "qtz mass (gm)"] = np.nan
 
         try:
             df_ox = process_ox(filepath)
-        except FileNotFoundError:
+        except (FileNotFoundError, EmptyDataError):
             df_ox = df_liq[["T (C)", "P (MPa)"]].copy()
             df_ox.loc[:, "ox mass (gm)"] = np.nan
             df_ox.loc[:, "ox Usp"] = np.nan
 
         try:
-            df_ap = process_amp(filepath)
-        except FileNotFoundError:
+            df_ap = process_ap(filepath)
+        except (FileNotFoundError, EmptyDataError):
             df_ap = df_liq[["T (C)", "P (MPa)"]].copy()
             df_ap.loc[:, "ap mass (gm)"] = np.nan
 
