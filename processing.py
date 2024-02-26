@@ -3,6 +3,16 @@ from pandas.errors import EmptyDataError
 import numpy as np
 import json
 import sys
+import os
+
+def replace_extension(folder_path, old_ext, new_ext):
+    for root, dirs, files in os.walk(folder_path):
+        for filename in files:
+            if filename.endswith(old_ext):
+                old_filepath = os.path.join(root, filename)
+                new_filename = filename[:-len(old_ext)] + new_ext
+                new_filepath = os.path.join(root, new_filename)
+                os.rename(old_filepath, new_filepath)
 
 molecular_weights = {
     "TiO2": 79.8658,
@@ -241,7 +251,6 @@ def merge_results(df, sample_name, H2O_wt, oxbuffer, mode):
         ]
     
     dirnames = df_filtered["Filename"].to_list()
-    print(dirnames)
 
     dfs = []
     for dirname in dirnames:
@@ -354,9 +363,13 @@ def merge_results(df, sample_name, H2O_wt, oxbuffer, mode):
     result.insert(2, "bulk wt% H2O", H2O_wt)
     result.insert(3, "Oxide buffer", oxbuffer)
     result.insert(4, "Mode", mode)
+    del df
     return result
 
 def main():
+    # convert tbl to csv
+    replace_extension("./out", ".tbl", ".csv")
+
     # load config file
     config = json.load(open("config.json", "r"))["processing"]
     l_sample = config["l_sample"]
@@ -371,25 +384,21 @@ def main():
     for sample_name in l_sample:
         for oxbuffer in l_oxbuffer:
             for H2O_wt in l_H2O_wt:
-                print(sample_name, oxbuffer, H2O_wt)
-                df_filtered = df[
-                (df["Sample"] == sample_name) \
-                & (df["H2O"] == H2O_wt) \
-                & (df["log fo2 Path"] == oxbuffer) \
-                & (df["Mode"] == mode)
-                ]
-                print(df_filtered.head())
-                """
+                print(
+                    "Sample: " + sample_name,
+                    "fO2: " + oxbuffer,
+                    str(H2O_wt) + "wt% H2O"
+                    )
                 result = merge_results(
                     df, sample_name, H2O_wt, oxbuffer, mode
                     )
-                result.result.to_csv(
-                    "summary/Sample-"
+                result.to_csv(
+                    "summary/Sample_"
                     + sample_name + "_"
                     + str(H2O_wt) + " wt% H2O_"
                     + oxbuffer + ".csv", index = False
                     )
-                """
+
 
 if __name__ == "__main__":
     main()
