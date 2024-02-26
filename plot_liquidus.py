@@ -60,10 +60,10 @@ for filename in filelist_wo_extension:
 
     fig, ax = plt.subplots(
         1, 2, sharey=True,
-        gridspec_kw=dict(width_ratios=(2, 1), wspace=0.1)
+        gridspec_kw=dict(width_ratios=(2, 1), wspace=0.2)
         )
-    ax[0].plot(ts_C_1, ps_MPa, "-o", label=phase1)
-    ax[0].plot(ts_C_2, ps_MPa, "-o", label=phase2)
+    ax[0].plot(ts_C_1, ps_MPa, "-", label=phase1)
+    ax[0].plot(ts_C_2, ps_MPa, "-", label=phase2)
     ax[0].set_xlim(*p1_xlim)
     ax[0].set_ylim(*p1_ylim)
     ax[0].legend()
@@ -73,8 +73,8 @@ for filename in filelist_wo_extension:
     ax[1].plot(diffs, ps_MPa, "-o", c="k")
     #ax[1].hlines(solved_P_MPa, 0, 50, linewidth=1, linestyle="solid", color="r")
     ax[1].axhline(y=solved_P_MPa, linewidth=1, linestyle="solid", color="r")
-    ax[1].vlines(5, 0, 200, linewidth=1, linestyle="dashed", color="k")
-    #ax[1].set_xlim(*p2_xlim)
+    ax[1].vlines(10, 0, 200, linewidth=1, linestyle="dashed", color="k")
+    ax[1].set_xlim(1,)
     ax[1].set_xscale("log")
     ax[1].set_xlabel(r"$|T_\mathrm{pl}^\mathrm{liquidus} - T_\mathrm{opx}^\mathrm{liquidus}|$")
     fig.savefig("plots/" + filename + ".jpg", dpi=300)

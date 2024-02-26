@@ -7,17 +7,18 @@
     },
     "processing": {
         "l_H2O_wt": [
-            0.5,
-            2.0,
             5.0
             ],
         "l_sample": [
-            "JB-1",
-            "JG-1"
+            "S-01",
+            "S-02",
+            "S-03",
+            "S-04"
         ],
         "l_oxbuffer": [
             "NNO",
-            "-1FMQ"
+            "FMQ",
+            "+1FMQ"
             ],
         "Mode": "Equilibrium"
     },
@@ -25,8 +26,50 @@
         "Phase1": "pl",
         "Phase2": "opx",
         "Pressure range (MPa)": [0, 51],
-        "p1_xlim": [500, 1200],
+        "p1_xlim": [800, 1200],
         "p1_ylim": [0, 50]
+    },
+    "plot_ptx": {
+        "Summary file": "summary/Sample_S-01_5.0 wt% H2O_+1FMQ.csv",
+        "Temperature range (C)": [800, 1200],
+        "Pressure range (MPa)": [0, 50],
+        "Phase": {
+            "ol": {
+                "content": "ol Fo",
+                "mass": "ol mass (gm)",
+                "content_name": "Forstelite (mol%)",
+                "range": [30, 90]
+            },
+            "opx": {
+                "content": "opx Mg#",
+                "mass": "opx mass (gm)",
+                "content_name": "Mg#",
+                "range": [30, 90]
+            },
+            "aug": {
+                "content": "aug Mg#",
+                "mass": "aug mass (gm)",
+                "content_name": "Mg#",
+                "range": [30, 90]
+            },
+            "pig": {
+                "content": "pig Mg#",
+                "mass": "pig mass (gm)",
+                "content_name": "Mg#",
+                "range": [30, 90]
+            },
+            "pl": {
+                "content": "pl An",
+                "mass": "pl mass (gm)",
+                "content_name": "Anorthite (mol%)",
+                "range": [30, 100]
+            },
+            "qtz": {
+                "content": "qtz mass (gm)",
+                "mass": "qtz mass (gm)",
+                "content_name": "Dummy",
+                "range": [0, 0]
+            }
+        }
     }
 }
-
