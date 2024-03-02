@@ -4,6 +4,8 @@ import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
 import scipy.interpolate
 import json
+import os
+
 
 def plot_cntr(phase, param_phases, df, t_C_range, p_MPa_range):
     # load parameters from config file
@@ -47,8 +49,7 @@ def plot_cntr(phase, param_phases, df, t_C_range, p_MPa_range):
 
     ax.set_xlabel("Temperature ($^{\circ}$C)")
     ax.set_ylabel("Pressure (MPa)")
-
-    fig.savefig("cntr/" + phase + ".tif", dpi=300, bbox_inches="tight")
+    return fig
 
 def main():
     # load config file
@@ -60,10 +61,16 @@ def main():
     t_C_range = config["Temperature range (C)"]
     p_MPa_range = config["Pressure range (MPa)"]
 
-    df = pd.read_csv(filename)
+    df = pd.read_csv("summary/" + filename + ".csv")
 
     for phase in phases:
-        plot_cntr(phase, param_phases, df, t_C_range, p_MPa_range)
+        fig = plot_cntr(phase, param_phases, df, t_C_range, p_MPa_range)
+        if not os.path.exists("cntr/" + filename):
+            os.makedirs("cntr/" + filename)
+        fig.savefig(
+            "cntr/" + filename + "/" + phase + ".tif",
+            dpi=300, bbox_inches="tight"
+            )
 
 if __name__ == "__main__":
     main()
