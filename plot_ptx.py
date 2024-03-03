@@ -40,8 +40,8 @@ def plot_cntr(phase, param_phases, df, t_C_range, p_MPa_range):
     c_cont2 = plt.contour(xi, yi, ci, colors=["k"], linewidths=0.5, linestyles="solid", levels=[10 * i for i in range(100)])
     c_cont2.clabel(fmt="%d", fontsize=8)
 
-    m_cont1 = plt.contour(xi, yi, mi, colors=["w"], linewidths=0.2, linestyles="dashed", levels=[i for i in range(100)])
-    m_cont2 = plt.contour(xi, yi, mi, colors=["w"], linewidths=0.5, linestyles="dashed", levels=[10 * i for i in range(100)])
+    m_cont1 = plt.contour(xi, yi, mi, colors=["w"], linewidths=0.5, linestyles="dashed", levels=[i for i in range(100)])
+    m_cont2 = plt.contour(xi, yi, mi, colors=["w"], linewidths=1.0, linestyles="dashed", levels=[10 * i for i in range(100)])
     m_cont2.clabel(fmt="%d", fontsize=8)
 
     ax.set_xlim(*t_C_range)
@@ -51,26 +51,41 @@ def plot_cntr(phase, param_phases, df, t_C_range, p_MPa_range):
     ax.set_ylabel("Pressure (MPa)")
     return fig
 
+def get_files_with_extension(directory, extension):
+    files = []
+    for file in os.listdir(directory):
+        if file.endswith(extension) and os.path.isfile(os.path.join(directory, file)):
+            files.append(os.path.splitext(file)[0])  # 拡張子を除いたファイル名のみを取得
+    return files
+
 def main():
     # load config file
     with open("config.json") as f:
         config = json.load(f)["plot_ptx"]
-    filename = config["Summary file"]
+    # filename = config["Summary file"]
+    filenames = get_files_with_extension("summary", "csv")
+
     param_phases = config["Phase"]
     phases = list(param_phases.keys())
     t_C_range = config["Temperature range (C)"]
     p_MPa_range = config["Pressure range (MPa)"]
 
-    df = pd.read_csv("summary/" + filename + ".csv")
+    for filename in filenames:
+        df = pd.read_csv("summary/" + filename + ".csv")
+        print(filename)
 
-    for phase in phases:
-        fig = plot_cntr(phase, param_phases, df, t_C_range, p_MPa_range)
-        if not os.path.exists("cntr/" + filename):
-            os.makedirs("cntr/" + filename)
-        fig.savefig(
-            "cntr/" + filename + "/" + phase + ".tif",
-            dpi=300, bbox_inches="tight"
-            )
+        for phase in phases:
+            try:
+                fig = plot_cntr(phase, param_phases, df, t_C_range, p_MPa_range)
+                if not os.path.exists("cntr/" + filename):
+                    os.makedirs("cntr/" + filename)
+                fig.savefig(
+                    "cntr/" + filename + "/" + phase + ".tif",
+                    dpi=300, bbox_inches="tight"
+                    )
+                plt.close()
+            except:
+                pass
 
 if __name__ == "__main__":
     main()
